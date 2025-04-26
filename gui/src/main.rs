@@ -30,7 +30,12 @@ fn main() -> eframe::Result {
     eframe::run_native(
         "naviz",
         native_options,
-        Box::new(|cc| Ok(Box::new(App::new(cc)))),
+        Box::new(|cc| {
+            Ok(Box::new(App::new_with_init_and_persistence(
+                cc,
+                Default::default(),
+            )))
+        }),
     )
 }
 
@@ -67,7 +72,12 @@ fn main() {
             .start(
                 canvas,
                 web_options,
-                Box::new(|cc| Ok(Box::new(App::new(cc)))),
+                Box::new(|cc| {
+                    Ok(Box::new(App::new_with_init_and_persistence(
+                        cc,
+                        Default::default(),
+                    )))
+                }),
             )
             .await;
 
