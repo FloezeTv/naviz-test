@@ -28,15 +28,17 @@ jobs:
             ~/.cargo/bin
             ~/.cargo/git
             ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ env.CACHE_KEY }}-cargo
       - name: Install Rust toolchain
         run: rustup target add wasm32-unknown-unknown
+      - name: Setup cargo binstall
+        uses: cargo-bins/cargo-binstall@main
       - name: Install trunk
-        run: cargo install trunk
-      - name: Cache build wasm32-unknown-unknown
+        run: cargo binstall trunk
+      - name: Cache build
         uses: Swatinem/rust-cache@v2
         with:
-          key: ${{ env.CACHE_KEY }}
+          key: ${{ env.CACHE_KEY }}-target
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -46,7 +48,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ",/gui/dist"
+          path: ./gui/dist
 
   deploy:
     environment:
