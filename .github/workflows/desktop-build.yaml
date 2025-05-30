@@ -20,13 +20,13 @@ jobs:
           - target: x86_64-apple-darwin
             image: macos-13
           - target: aarch64-unknown-linux-gnu
-            image: ubuntu-24.04-arm
+            image: ubuntu-latest
           - target: i686-unknown-linux-gnu
             image: ubuntu-latest
           - target: x86_64-unknown-linux-gnu
             image: ubuntu-latest
           - target: aarch64-pc-windows-msvc
-            image: windows-11-arm
+            image: windows-latest
           - target: i686-pc-windows-msvc
             image: windows-latest
           - target: x86_64-pc-windows-msvc
