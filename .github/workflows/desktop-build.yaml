@@ -45,7 +45,7 @@ jobs:
         with:
           key: ${{ env.CACHE_KEY }}
       - name: Install Rust toolchain
-        run: rustup toolchain install ${{ matrix.target }}
+        run: rustup toolchain install stable --target ${{ matrix.target }}
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
       - name: Upload artifact
