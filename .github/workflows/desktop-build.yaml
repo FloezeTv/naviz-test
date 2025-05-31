@@ -22,11 +22,12 @@ jobs:
           - target: aarch64-unknown-linux-gnu
             image: ubuntu-latest
             additional-packages: gcc-aarch64-linux-gnu
-            cc: aarch64-linux-gnu-gcc
+            env:
+              CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
           - target: i686-unknown-linux-gnu
             image: ubuntu-latest
-            additional-packages: gcc-i686-linux-gnu
-            cc: i686-linux-gnu-gcc
+            env:
+              CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER: gcc-i686-linux-gnu
           - target: x86_64-unknown-linux-gnu
             image: ubuntu-latest
           - target: aarch64-pc-windows-msvc
@@ -37,8 +38,7 @@ jobs:
             image: windows-latest
       fail-fast: false
     runs-on: ${{ matrix.image }}
-    env:
-      CC: ${{ matrix.cc }}
+    env: ${{ matrix.env }}
     steps:
       - name: Install additional packages
         run: sudo apt install -y ${{ matrix.additional-packages }}
