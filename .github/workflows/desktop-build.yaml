@@ -78,16 +78,18 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          path: build
-      - name: Create archives
+          path: artifacts
+      - name: Rename binaries
+        working-directory: artifacts
         run: |
+          mkdir ../bin
           for release in */;
           do
-            zip -r "${release%/}.zip" "$release";
+            mv "$release/*" "../bin/${release%/}";
           done
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           draft: true
-          files: build/*.zip
+          files: bin/*
 
