@@ -87,7 +87,7 @@ jobs:
           for release in */
           do
             ls -lA "$release"
-            mv "${release}*" "../bin/${release%/}"
+            mv "${release}"* "../bin/${release%/}"
           done
       - name: Create release
         uses: softprops/action-gh-release@v2
