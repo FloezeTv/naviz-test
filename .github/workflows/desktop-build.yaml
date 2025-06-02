@@ -55,8 +55,8 @@ jobs:
           fetch-depth: 0
           # but only history (treeless)
           filter: "tree:0"
-          # https://github.com/actions/checkout/issues/882#issuecomment-2254187250
-          fetch-tags: true
+          # https://github.com/actions/checkout/issues/882#issuecomment-2153087319
+          ref: ${{ github.ref }}
       - name: Restore cache
         uses: Swatinem/rust-cache@v2
         with:
