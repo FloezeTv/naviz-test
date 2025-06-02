@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
     name: Build ${{ matrix.target }}
     runs-on: ${{ matrix.image }}
-    env: ${{ matrix.env == '' && fromJSON('{}') || matrix.env }}
+    env: ${{ matrix.env || fromJSON('{}')}}
     steps:
       - name: Install additional packages
         run: sudo apt install -y ${{ matrix.additional-packages }}
@@ -72,3 +72,15 @@ jobs:
           path: |
             ./target/${{ matrix.target }}/release/naviz-gui${{ matrix.app-suffix }}
           name: naviz-${{ matrix.target }}
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: build
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          files: build/*
+
