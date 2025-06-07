@@ -21,6 +21,7 @@ permissions:
 env:
   DIR: python
   PYTHON_VERSION: "3.10"
+  MATURIN_VERSION: "1.8.1"
 
 jobs:
   linux:
@@ -53,6 +54,7 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: "true"
           manylinux: auto
+          maturin-version: ${{ env.MATURIN_VERSION }}
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -85,6 +87,7 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: "true"
           manylinux: musllinux_1_2
+          maturin-version: ${{ env.MATURIN_VERSION }}
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -113,6 +116,7 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter
           sccache: "true"
+          maturin-version: ${{ env.MATURIN_VERSION }}
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -140,6 +144,7 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --find-interpreter
           sccache: "true"
+          maturin-version: ${{ env.MATURIN_VERSION }}
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -156,6 +161,7 @@ jobs:
           working-directory: ${{ env.DIR }}
           command: sdist
           args: --out dist
+          maturin-version: ${{ env.MATURIN_VERSION }}
       - name: Upload sdist
         uses: actions/upload-artifact@v4
         with:
