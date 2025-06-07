@@ -25,7 +25,7 @@ jobs:
         id: clippy
         run: cargo clippy --all-targets --all-features
       - name: Generate Clippy Report
-        if: ${{ steps.clippy.conclusion == 'failure' }}
+        if: ${{ failure() && steps.clippy.conclusion == 'failure' }}
         run: |
           echo "# Clippy" >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
