@@ -5,7 +5,7 @@ on:
   push:
 
 env:
-  CACHE_KEY: lint
+  CACHE_KEY: lint-rust
   # Fail on all warnings (including lints)
   RUSTFLAGS: "-Dwarnings"
 
@@ -22,5 +22,13 @@ jobs:
         with:
           key: ${{ env.CACHE_KEY }}
       - name: Clippy
+        id: clippy
         run: cargo clippy --all-targets --all-features
+      - name: Generate Clippy Report
+        if: ${{ steps.clippy.conclusion == 'failure' }}
+        run: |
+          echo "# Clippy" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          cargo clippy -q >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
