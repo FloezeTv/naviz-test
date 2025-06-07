@@ -21,12 +21,12 @@ jobs:
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.matrix.outputs }}
+      matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
       - name: Build Matrix
         id: matrix
         run: |
-          jq 'map([.arch=.arch[]]) | flatten' << EOF
+          echo matrix=$(jq -rc 'map([.arch=.arch[]]) | flatten' <<EOF
             [
               {
                 "os": "linux",
@@ -41,14 +41,15 @@ jobs:
               }, {
                 "os": "macos",
                 "image": "macos-latest",
-                "arch": ["x86_64", "aarch64"],
+                "arch": ["x86_64", "aarch64"]
               }, {
                 "os": "windows",
                 "image": "windows-latest",
-                "arch": ["x86_64", "x86"],
+                "arch": ["x86_64", "x86"]
               }
             ]
-          EOF > "$GITHUB_OUTPUT"
+          EOF
+          ) > "$GITHUB_OUTPUT"
 
   build:
     needs: generate-matrix
