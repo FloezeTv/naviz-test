@@ -44,7 +44,7 @@ jobs:
               }, {
                 "os": "windows",
                 "image": "windows-latest",
-                "arch": ["x86_64", "x86", "aarch64"]
+                "arch": ["x86_64", "x86"]
               }
             ]
           EOF
