@@ -36,7 +36,7 @@ jobs:
               }, {
                 "os": "linux",
                 "image": "ubuntu-latest",
-                "arch": ["a", "b", "c"],
+                "arch": ["x86_64", "x86", "aarch64", "armv7"],
                 "manylinux": "musllinux_1_2"
               }, {
                 "os": "macos",
