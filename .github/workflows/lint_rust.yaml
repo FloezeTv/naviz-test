@@ -1,0 +1,26 @@
+name: Lint Rust
+
+on:
+  pull_request:
+  push:
+
+env:
+  CACHE_KEY: lint
+  # Fail on all warnings (including lints)
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ env.CACHE_KEY }}
+      - name: Clippy
+        run: cargo clippy --all-targets --all-features
+
