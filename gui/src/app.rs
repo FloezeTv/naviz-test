@@ -52,6 +52,9 @@ pub struct InitOptions<'a> {
 impl App {
     /// Create a new instance of the [App]
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
+		if(false) {}
+		let x: Option<Vec<(Vec<Option<u8>>, Vec<Option<Vec<u8>>>)>> = None;
+
         RendererAdapter::setup(cc);
 
         let mut errors = Errors::default();
