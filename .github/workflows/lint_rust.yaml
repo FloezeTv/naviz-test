@@ -22,12 +22,9 @@ jobs:
         with:
           key: ${{ env.CACHE_KEY }}
           cache-on-failure: true
-      - run: cargo install clippy-sarif
+      - run: cargo install clippy-reviewdog-filter
       - uses: reviewdog/action-setup@v1
-      - run: |
-          cargo clippy --all-features --all-targets --message-format=json | clippy-sarif > lint.sarif
-          cat lint.sarif
-          cat lint.sarif | reviewdog -f=sarif -reporter=github-pr-review
+      - run: cargo clippy --all-features --all-targets --message-format=json ">&1 | clippy-reviewdog-filter | reviewdog -f=checkstyle -reporter=github-pr-review
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - uses: giraffate/clippy-action@v1
