@@ -24,7 +24,6 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           key: ${{ env.CACHE_KEY }}
-      -
       - name: Install sarif tools
         run: cargo install clippy-sarif sarif-fmt
       - name: Lint Rust
