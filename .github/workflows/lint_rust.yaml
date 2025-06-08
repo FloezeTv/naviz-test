@@ -21,9 +21,13 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           key: ${{ env.CACHE_KEY }}
+          cache-on-failure: true
       - run: cargo install clippy-sarif
       - uses: reviewdog/action-setup@v1
-      - run: cargo clippy --all-features --all-targets --message-format=json | clippy-sarif | reviewdog -f=sarif -reporter=github-pr-review
+      - run: |
+          cargo clippy --all-features --all-targets --message-format=json | clippy-sarif > lint.sarif
+          cat lint.sarif
+          cat lint.sarif | reviewdog -f=sarif -reporter=github-pr-review
       # - uses: giraffate/clippy-action@v1
       #   with:
       #     reporter: "github-pr-review"
@@ -51,6 +55,7 @@ jobs:
   #       uses: github/codeql-action/upload-sarif@v3
   #       with:
   #         sarif_file: lint.sarif
+
 # jobs:
 #   rust:
 #     runs-on: ubuntu-latest
