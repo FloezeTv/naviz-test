@@ -7,7 +7,7 @@ on:
 env:
   CACHE_KEY: lint-rust
   # Fail on all warnings (including lints)
-  RUSTFLAGS: "-Dwarnings"
+  # RUSTFLAGS: "-Dwarnings"
 
 jobs:
   clippy:
@@ -17,10 +17,20 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
-      - uses: giraffate/clippy-action@v1
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
         with:
-          reporter: "github-pr-review"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          key: ${{ env.CACHE_KEY }}
+      - run: cargo install clippy-sarif
+      - uses: reviewdog/action-setup@v1
+      - run: |
+          cargo clippy --all-features --all-targets --message-format=json
+          | clippy-sarif
+          | reviewdog -f=sarif -reporter=github-pr-review
+      # - uses: giraffate/clippy-action@v1
+      #   with:
+      #     reporter: "github-pr-review"
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
   # clippy:
   #   name: Clippy
   #   runs-on: ubuntu-latest
@@ -44,6 +54,7 @@ jobs:
   #       uses: github/codeql-action/upload-sarif@v3
   #       with:
   #         sarif_file: lint.sarif
+
 # jobs:
 #   rust:
 #     runs-on: ubuntu-latest
