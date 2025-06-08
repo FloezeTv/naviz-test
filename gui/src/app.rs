@@ -52,6 +52,8 @@ pub struct InitOptions<'a> {
 impl App {
     /// Create a new instance of the [App]
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
+		if(false) {}
+
         RendererAdapter::setup(cc);
 
         let mut errors = Errors::default();
