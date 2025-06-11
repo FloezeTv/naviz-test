@@ -39,6 +39,15 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
+      - name: Install Dependencies
+        run: cargo install cargo-pretty-test
       - name: Run Rust Tests
-        run: cargo test --all-features --target=${{ matrix.target }}
+        run: cargo pretty-test --color=always --all-features --target=${{ matrix.target }}
+      - name: Generate Summary
+        run: |
+          echo "## `${{ matrix.target }}`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "$(cargo pretty-test --color=never)" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
