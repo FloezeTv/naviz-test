@@ -1,0 +1,53 @@
+name: Test
+
+# This workflow runs the tests.
+
+on:
+  push:
+
+env:
+  CACHE_KEY: test
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            image: macos-latest
+          - target: x86_64-apple-darwin
+            image: macos-latest
+          - target: aarch64-unknown-linux-gnu
+            image: ubuntu-24.04-arm
+          - target: i686-unknown-linux-gnu
+            image: ubuntu-latest
+            prepare: sudo apt install -y gcc-i686-linux-gnu
+            env:
+              CARGO_TARGET_I686_UNKNOWN_LINUX_GNU_LINKER: i686-linux-gnu-gcc
+          - target: x86_64-unknown-linux-gnu
+            image: ubuntu-latest
+          - target: aarch64-pc-windows-msvc
+            image: windows-11-arm
+          - target: i686-pc-windows-msvc
+            image: windows-latest
+          - target: x86_64-pc-windows-msvc
+            image: windows-latest
+      fail-fast: false
+    name: Test ${{ matrix.target }}
+    runs-on: ${{ matrix.image }}
+    env: ${{ matrix.env || fromJSON('{}')}}
+    steps:
+      - name: Prepare
+        run: ${{ matrix.prepare }}
+        if: ${{ matrix.prepare }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Rust toolchain
+        run: rustup toolchain install stable --target=${{ matrix.target }}
+      - name: Restore Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
+      - name: Run Rust Tests
+        run: cargo test --all-features --target=${{ matrix.target }}
+
