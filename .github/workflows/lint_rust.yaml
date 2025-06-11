@@ -28,7 +28,7 @@ jobs:
       - name: Install tools
         run: cargo install clippy-sarif
       - name: Run Clippy
-        run: cargo clippy --all-features --all-targets --message-format=json | clippy-sarif > clippy.sarif
+        run: cargo clippy --all-features --all-targets --message-format=json | sort -u | clippy-sarif > clippy.sarif
       - name: Upload Findings
         uses: github/codeql-action/upload-sarif@v3
         with:
