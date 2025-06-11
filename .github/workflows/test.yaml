@@ -42,6 +42,7 @@ jobs:
       - name: Run Rust Tests
         run: cargo test --color=always --all-features --target=${{ matrix.target }}
       - name: Generate Summary
+        shell: bash
         run: |
           echo "```" > $GITHUB_STEP_SUMMARY
           echo "$(cargo test --color=never --all-features --target=${{ matrix.target }})" >> $GITHUB_STEP_SUMMARY
