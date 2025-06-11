@@ -46,6 +46,6 @@ jobs:
           echo "## `${{ matrix.target }}`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
-          echo "$(cargo test --color=never)" >> $GITHUB_STEP_SUMMARY
+          echo "$(cargo test --color=never --all-features --target=${{ matrix.target }})" >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
 
