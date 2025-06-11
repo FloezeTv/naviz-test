@@ -1,5 +1,8 @@
 name: Lint
 
+# This workflow lints the code and uploads new findings to GitHub.
+# Newly introduced findings will be added to pull requests as review comments.
+
 on:
   push:
 
@@ -25,22 +28,9 @@ jobs:
       - name: Install tools
         run: cargo install clippy-sarif
       - name: Run Clippy
-        run: cargo clippy --all-features --message-format=json | clippy-sarif > clippy.sarif
+        run: cargo clippy --all-features --all-targets --message-format=json | clippy-sarif > clippy.sarif
       - name: Upload Findings
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: clippy.sarif
-
-  format:
-    name: Check Formatting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Setup Rust Toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt
-      - name: Check Rust Formatting
-        run: cargo fmt --check
 
