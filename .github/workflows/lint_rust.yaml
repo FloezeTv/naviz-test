@@ -1,25 +1,24 @@
 name: Lint
 
 on:
-  # pull_request:
   push:
 
 env:
   CACHE_KEY: lint-rust
-  # Fail on all warnings (including lints)
-  # RUSTFLAGS: "-Dwarnings"
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           # fetch full history with tags
           fetch-depth: 0
           # but only history (treeless)
           filter: "tree:0"
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
       - name: Restore Rust Cache
@@ -27,16 +26,22 @@ jobs:
         with:
           key: ${{ env.CACHE_KEY }}
           cache-on-failure: true
-      - run: cargo install clippy-sarif
-      - uses: reviewdog/action-setup@v1
+      - name: Install tools
+        run: cargo install clippy-sarif
       - name: Run Clippy
         run: cargo clippy --all-features --message-format=json | clippy-sarif > clippy.sarif
-      # - name: Annotate PR
-      #   run: cat clippy.sarif | reviewdog -name="clippy" -f=sarif -reporter=github-pr-check -level=error
-      #   env:
-      #     REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload findings
+      - name: Upload Findings
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: clippy.sarif
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - name: Check Rust Formatting
+        run: cargo fmt --check
 
