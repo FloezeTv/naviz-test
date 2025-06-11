@@ -44,7 +44,7 @@ jobs:
       - name: Generate Summary
         shell: bash
         run: |
-          echo "```" > $GITHUB_STEP_SUMMARY
-          echo "$(cargo test --color=never --all-features --target=${{ matrix.target }})" >> $GITHUB_STEP_SUMMARY
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
 
