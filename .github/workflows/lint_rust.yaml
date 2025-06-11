@@ -40,7 +40,7 @@ jobs:
       - run: cargo install clippy-reviewdog-filter clippy-sarif
       - uses: reviewdog/action-setup@v1
       # - run: cargo clippy --all-features --message-format=json 2>&1 | clippy-reviewdog-filter | reviewdog -f=checkstyle -reporter=github-pr-review
-      - run: cargo clippy --all-features --message-format=json | clippy-sarif | reviewdog --tool-name="clippy" --fail-level=warning -f=sarif -reporter=github-pr-check
+      - run: cargo clippy --all-features --message-format=json | clippy-sarif | reviewdog -name="clippy" -fail-level=warning -f=sarif -reporter=github-pr-check
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - uses: giraffate/clippy-action@v1
