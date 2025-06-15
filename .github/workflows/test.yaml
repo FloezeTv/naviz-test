@@ -39,6 +39,11 @@ jobs:
           cache-key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
           target: ${{ matrix.target }}
           rustflags: ""
+      - run: |
+          echo $Python_LIBRARIES || true
+          echo $Python_LIBRARY_DIRS || true
+          which python || true
+        shell: bash
       # - name: Install Rust toolchain
       #   run: rustup toolchain install stable --target=${{ matrix.target }}
       # - name: Restore Rust Cache
