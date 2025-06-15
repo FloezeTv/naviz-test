@@ -21,19 +21,11 @@ jobs:
         with:
           components: clippy
           cache-key: ${{ env.CACHE_KEY }}
-      # - name: Setup Rust Toolchain
-      #   uses: dtolnay/rust-toolchain@stable
-      #   with:
-      #     components: clippy
-      # - name: Restore Rust Cache
-      #   uses: Swatinem/rust-cache@v2
-      #   with:
-      #     key: ${{ env.CACHE_KEY }}
-      #     cache-on-failure: true
+          rustflags: "" # Don't report warnings as errors
       - name: Install tools
-        run: cargo install clippy-sarif
+        run: cargo install clippy-sarif sarif-fmt
       - name: Run Clippy
-        run: cargo clippy --all-features --all-targets --message-format=json | sort -u | clippy-sarif > clippy.sarif
+        run: cargo clippy --all-features --all-targets --keep-going --message-format=json | sort -u | clippy-sarif | tee clippy.sarif | sarif-fmt --color=always
       - name: Upload Findings
         uses: github/codeql-action/upload-sarif@v3
         with:

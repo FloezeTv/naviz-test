@@ -17,4 +17,4 @@ jobs:
         with:
           components: rustfmt
       - name: Check Rust Formatting
-        run: cargo fmt --check --color=always
+        uses: actions-rust-lang/rustfmt@v1
