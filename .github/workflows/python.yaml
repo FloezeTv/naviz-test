@@ -95,7 +95,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    # needs: [linux, musllinux, windows, macos, sdist]
     needs: [build, sdist]
     permissions:
       # Use to sign the release artifacts
@@ -118,4 +117,3 @@ jobs:
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/*
-
