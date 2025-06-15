@@ -31,9 +31,9 @@ jobs:
       #     key: ${{ env.CACHE_KEY }}
       #     cache-on-failure: true
       - name: Install tools
-        run: cargo install clippy-sarif
+        run: cargo install clippy-sarif sarif-fmt
       - name: Run Clippy
-        run: cargo clippy --all-features --all-targets --message-format=json | sort -u | clippy-sarif > clippy.sarif
+        run: cargo clippy --all-features --all-targets --message-format=json | sort -u | clippy-sarif | tee clippy.sarif | sarif-fmt
       - name: Upload Findings
         uses: github/codeql-action/upload-sarif@v3
         with:
