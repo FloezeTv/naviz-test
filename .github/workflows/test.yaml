@@ -38,6 +38,7 @@ jobs:
           components: clippy
           cache-key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
           target: ${{ matrix.target }}
+          rustflags: ""
       # - name: Install Rust toolchain
       #   run: rustup toolchain install stable --target=${{ matrix.target }}
       # - name: Restore Rust Cache

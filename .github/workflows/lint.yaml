@@ -21,6 +21,7 @@ jobs:
         with:
           components: clippy
           cache-key: ${{ env.CACHE_KEY }}
+          rustflags: ""
       # - name: Setup Rust Toolchain
       #   uses: dtolnay/rust-toolchain@stable
       #   with:
@@ -33,7 +34,7 @@ jobs:
       - name: Install tools
         run: cargo install clippy-sarif sarif-fmt
       - name: Run Clippy
-        run: cargo clippy --all-features --all-targets --message-format=json | sort -u | clippy-sarif | tee clippy.sarif | sarif-fmt
+        run: cargo clippy --all-features --all-targets --keep-going --message-format=json | sort -u | clippy-sarif | tee clippy.sarif | sarif-fmt --color=always
       - name: Upload Findings
         uses: github/codeql-action/upload-sarif@v3
         with:
