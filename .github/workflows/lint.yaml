@@ -21,16 +21,7 @@ jobs:
         with:
           components: clippy
           cache-key: ${{ env.CACHE_KEY }}
-          rustflags: ""
-      # - name: Setup Rust Toolchain
-      #   uses: dtolnay/rust-toolchain@stable
-      #   with:
-      #     components: clippy
-      # - name: Restore Rust Cache
-      #   uses: Swatinem/rust-cache@v2
-      #   with:
-      #     key: ${{ env.CACHE_KEY }}
-      #     cache-on-failure: true
+          rustflags: "" # Don't report warnings as errors
       - name: Install tools
         run: cargo install clippy-sarif sarif-fmt
       - name: Run Clippy

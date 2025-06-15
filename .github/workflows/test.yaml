@@ -33,6 +33,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4^
       - name: Setup Python Toolchain
+        # Setup a compatible python-toolchain for the python-bindings
         uses: actions/setup-python@v5
         with:
           python-version-file: "python/pyproject.toml"
@@ -42,17 +43,6 @@ jobs:
           components: clippy
           cache-key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
           target: ${{ matrix.target }}
-          rustflags: ""
-      - run: |
-          echo $Python_LIBRARIES || true
-          echo $Python_LIBRARY_DIRS || true
-          which python || true
-        shell: bash
-      # - name: Install Rust toolchain
-      #   run: rustup toolchain install stable --target=${{ matrix.target }}
-      # - name: Restore Rust Cache
-      #   uses: Swatinem/rust-cache@v2
-      #   with:
-      #     key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
+          rustflags: "" # Don't fail on warnings
       - name: Run Rust Tests
         run: cargo test --color=always --all-features --target=${{ matrix.target }}
