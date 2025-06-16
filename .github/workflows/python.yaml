@@ -71,10 +71,9 @@ jobs:
           sccache: "true"
           manylinux: ${{ matrix.manylinux }}
           before-script-linux: |
-            # Copy `rust-toolchain.toml` such that `sccache`
-            # calls to `rustc` pick up `rust-toolchain.toml`
+            # Copy `rust-toolchain.toml` such that `sccache` calls to `rustc` pick up `rust-toolchain.toml`
+            # See https://github.com/PyO3/maturin-action/issues/348#issuecomment-2978230447
             cp rust-toolchain.toml /
-          docker-options: "-e SCCACHE_LOG=trace"
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
