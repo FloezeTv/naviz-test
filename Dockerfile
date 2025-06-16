@@ -10,6 +10,8 @@ RUN apk add bash curl git musl-dev
 # `wasm-bindgen-cli` for `aarch64` only compiled for glibc; install `gcompat`
 RUN if [[ "$(uname -m)" == "aarch64" ]]; then apk add gcompat; fi
 
+COPY rust-toolchain.toml ./
+
 # Rust toolchain for wasm
 RUN rustup target add wasm32-unknown-unknown
 
