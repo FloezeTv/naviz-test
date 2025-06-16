@@ -70,9 +70,12 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: "true"
           manylinux: ${{ matrix.manylinux }}
-          before-script-linux:
-            | # DEBUG: I think this fixes the build on linux with non-stable rust channel
+          before-script-linux: |
+            # Manually install `sccache`,
+            # as the script is called before `sccache` is installed by the action
             uv tool install "sccache>=0.10.0"
+            # start the `sccache`-server in the current directory
+            # to have calls to `rustc` pick up `rust-toolchain.toml`
             SCCACHE_START_SERVER=1 SCCACHE_NO_DAEMON=1 sccache &
           docker-options: "-e SCCACHE_LOG=trace"
       - name: Upload wheels
