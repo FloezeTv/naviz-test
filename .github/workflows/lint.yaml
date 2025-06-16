@@ -5,9 +5,12 @@ name: Lint
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
 
 env:
-  CACHE_KEY: lint-rust
+  CACHE_KEY: lint
 
 jobs:
   lint:

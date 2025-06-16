@@ -63,12 +63,6 @@ jobs:
           components: clippy
           cache-key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
           target: ${{ matrix.target }}
-      # - name: Restore cache
-      #   uses: Swatinem/rust-cache@v2
-      #   with:
-      #     key: ${{ env.CACHE_KEY }}-${{ matrix.target}}
-      # - name: Install Rust toolchain
-      #   run: rustup toolchain install stable --target ${{ matrix.target }}
       - name: Build
         working-directory: gui
         run: cargo build --release --target ${{ matrix.target }}
@@ -100,3 +94,15 @@ jobs:
         with:
           draft: true
           files: bin/*
+          body: |
+            # MQT NAViz ${{ github.ref_name }}
+
+            <!-- Add short description about changes here -->
+
+            To obtain this version, either:
+            - Download the correct release of the desktop-version from the assets below
+            - Use the docker-image: `ghcr.io/${{ github.repository }}/naviz-web:${{ github.ref_name }}` FIXME: correct that tag (remove v)
+            - Install the python-package: `pip install --upgrade mqt-naviz`
+
+            ## Changelog
+          generate_release_notes: true

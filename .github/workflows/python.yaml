@@ -111,9 +111,9 @@ jobs:
           subject-path: "wheels-*/*"
       - name: Publish to PyPI
         uses: PyO3/maturin-action@v1
-        if: false
         env:
           MATURIN_PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        if: false
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/*
