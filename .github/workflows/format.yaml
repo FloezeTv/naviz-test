@@ -1,6 +1,6 @@
 name: Format
 
-# This workflow checks the formatting of the code and fails if it is not formatted.
+# This workflow checks the formatting of the code and fails if it is not correctly formatted.
 
 on:
   push:
