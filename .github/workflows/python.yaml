@@ -63,7 +63,7 @@ jobs:
         with:
           python-version: 3.x
       - name: Build wheels
-        uses: PyO3/maturin-action@v1
+        uses: PyO3/maturin-action@v1.49.2
         with:
           working-directory: ${{ env.DIR }}
           target: ${{ matrix.arch }}
