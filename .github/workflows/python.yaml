@@ -65,7 +65,7 @@ jobs:
           python-version: 3.x
       - name: Build wheels
         # uses: PyO3/maturin-action@v1
-        uses: FloezeTv/maturin-action@8fd56a8d942ca91026aef0eafd0cbd451ca524ba
+        uses: FloezeTv/maturin-action@d2920e7ebcef2518c76dfac8215f18448bf222f2
         with:
           working-directory: ${{ env.DIR }}
           target: ${{ matrix.arch }}
