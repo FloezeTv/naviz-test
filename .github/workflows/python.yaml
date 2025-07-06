@@ -101,11 +101,13 @@ jobs:
     strategy:
       matrix:
         include: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+      fail-fast: false
     name: Build ${{ matrix.os }} ${{ matrix.arch }}
     runs-on: ${{ matrix.image }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+        if: false
         with:
           python-version: 3.x
       - uses: actions-rust-lang/setup-rust-toolchain@v1
