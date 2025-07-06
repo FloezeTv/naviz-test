@@ -66,8 +66,8 @@ jobs:
       - name: Update release
         if: ${{ github.event_name == 'release' }}
         run: |
-          BINARY="${{ runner.temp }}/naviz-${{ matrix.target }}"
           mv "./target/${{ matrix.target }}/release/naviz-gui${{ matrix.app-suffix }}" "$BINARY"
           gh release upload "${{ github.event.release.tag_name }}" "$BINARY#${{ matrix.target }}"
         env:
+          BINARY: ${{ runner.temp }}/naviz-${{ matrix.target }}
           GITHUB_TOKEN: ${{ github.TOKEN }}
