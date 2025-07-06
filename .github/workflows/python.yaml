@@ -55,6 +55,10 @@ jobs:
                 "os": "windows",
                 "image": "windows-latest",
                 "arch": ["x86_64", "x86"]
+              }, {
+                "os": "windows",
+                "image": "windows-11-arm",
+                "arch": ["aarch64"]
               }
             ]
           EOF
@@ -74,6 +78,10 @@ jobs:
                 "os": "windows",
                 "image": "windows-latest",
                 "arch": ["x86_64"]
+              }, {
+                "os": "windows",
+                "image": "windows-11-arm",
+                "arch": ["aarch64"]
               }
             ]
           EOF
@@ -100,6 +108,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          cache: false
       - name: Build wheels
         uses: PyO3/maturin-action@v1
         with:
@@ -154,3 +165,4 @@ jobs:
         with:
           command: upload
           args: --non-interactive --skip-existing wheels-*/*
+
